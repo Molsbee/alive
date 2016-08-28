@@ -8,7 +8,8 @@ type Ping struct {
 	ExpectedStatusCode int
 }
 
-// TableName gorm convention for determing table name associated with struct
+// TableName - gorm convention for determining the table name when executing
+// queries
 func (Ping) TableName() string {
 	return "ping"
 }
