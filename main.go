@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
+	"github.com/molsbee/alive/resource"
 	"github.com/molsbee/alive/service"
 )
 
@@ -30,5 +31,10 @@ func main() {
 	service.StartPingService(db)
 
 	router := mux.NewRouter()
+
+	pingResource := resource.NewPingResource(db)
+	router.HandleFunc("/configuration/ping", pingResource.Get).Methods("GET")
+	router.HandleFunc("/configuration/ping", pingResource.Create).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

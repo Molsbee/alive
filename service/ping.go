@@ -7,12 +7,13 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
+	"github.com/molsbee/alive/model/database"
 	"github.com/molsbee/alive/repository"
 )
 
 type pingService struct {
 	repository  repository.PingRepository
-	workChannel chan repository.Ping
+	workChannel chan database.Ping
 }
 
 func (ps *pingService) pingWorker(id int) {
@@ -34,7 +35,7 @@ func (ps *pingService) pingWorker(id int) {
 func StartPingService(db *gorm.DB) {
 	service := pingService{
 		repository:  repository.NewPingRepository(db),
-		workChannel: make(chan repository.Ping, 20),
+		workChannel: make(chan database.Ping, 20),
 	}
 
 	// Startup ping works in seperate go routines that will poll workChannel
