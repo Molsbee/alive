@@ -36,5 +36,8 @@ func main() {
 	router.HandleFunc("/configuration/ping", pingResource.Get).Methods("GET")
 	router.HandleFunc("/configuration/ping", pingResource.Create).Methods("POST")
 
+	pingResponse := resource.NewPingResponseResource(db)
+	router.HandleFunc("/ping/{pingConfigID}", pingResponse.Get).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

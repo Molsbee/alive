@@ -2,16 +2,19 @@ package database
 
 import "time"
 
-// PingResponse struct represents the data contained within the ping_response table
+// PingResponse - Struct to represent the data contained in the ping_response
+// table.  PingResponse table contains the duration in milliseconds of the call
+// and the time the call was executed with the status code received from the
+// endpoint and a reference to the PingConfig.
 type PingResponse struct {
-	ID         int64
-	CreatedTS  time.Time
-	DurationMS int64
-	StatusCode int
-	PingID     int64
+	ID           int64
+	CreatedTS    time.Time
+	DurationMS   int64
+	StatusCode   int
+	PingConfigID int64
 }
 
-// TableName - gorm convention for determining the table name when executing
+// TableName - Gorm convention for determining the table name when executing
 // queries
 func (PingResponse) TableName() string {
 	return "ping_response"
@@ -20,11 +23,11 @@ func (PingResponse) TableName() string {
 // NewPingResponse constructor for creating a PingResponse struct without the
 // status code field.  It is expected that the user will update the status
 // code field before saving the entry
-func NewPingResponse(created time.Time, duration int64, statusCode int, pingID int64) *PingResponse {
+func NewPingResponse(created time.Time, duration int64, statusCode int, pingConfigID int64) *PingResponse {
 	return &PingResponse{
-		CreatedTS:  created,
-		DurationMS: duration,
-		StatusCode: statusCode,
-		PingID:     pingID,
+		CreatedTS:    created,
+		DurationMS:   duration,
+		StatusCode:   statusCode,
+		PingConfigID: pingConfigID,
 	}
 }

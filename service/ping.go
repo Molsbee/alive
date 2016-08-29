@@ -12,7 +12,7 @@ import (
 type pingService struct {
 	pingRepo    repository.PingRepository
 	respRepo    repository.PingResponseRepository
-	workChannel chan database.Ping
+	workChannel chan database.PingConfig
 }
 
 // StartPingService populates the pingService struct with all the required
@@ -22,7 +22,7 @@ func StartPingService(db *gorm.DB) {
 	service := pingService{
 		pingRepo:    repository.NewPingRepository(db),
 		respRepo:    repository.NewPingResponseRepository(db),
-		workChannel: make(chan database.Ping, 20),
+		workChannel: make(chan database.PingConfig, 20),
 	}
 
 	// Startup ping works in seperate go routines that will poll workChannel

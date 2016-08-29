@@ -25,3 +25,14 @@ func (pr *PingResponseRepository) Save(response database.PingResponse) error {
 
 	return nil
 }
+
+// FindAllByPingConfigID lookup all entries in ping_response table filtered by
+// ping_config_id
+func (pr *PingResponseRepository) FindAllByPingConfigID(id int64) ([]database.PingResponse, error) {
+	pingResponses := []database.PingResponse{}
+	if err := pr.db.Where("ping_config_id=?", id).Find(&pingResponses).Error; err != nil {
+		return nil, err
+	}
+
+	return pingResponses, nil
+}

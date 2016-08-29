@@ -38,9 +38,9 @@ func (pr *PingResource) Get(w http.ResponseWriter, r *http.Request) {
 
 // Create - HandlerFunc for creating ping configuration entries in database
 func (pr *PingResource) Create(w http.ResponseWriter, r *http.Request) {
-	pingConfig := database.Ping{}
+	pingConfig := database.PingConfig{}
 	if err := json.NewDecoder(r.Body).Decode(&pingConfig); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 

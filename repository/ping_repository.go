@@ -16,8 +16,8 @@ func NewPingRepository(db *gorm.DB) PingRepository {
 	return PingRepository{db: db}
 }
 
-// Save creates a database recorded for the ping struct
-func (p *PingRepository) Save(ping database.Ping) error {
+// Save creates a database recorded for the PingConfig struct
+func (p *PingRepository) Save(ping database.PingConfig) error {
 	if err := p.db.Create(&ping).Error; err != nil {
 		return err
 	}
@@ -25,9 +25,9 @@ func (p *PingRepository) Save(ping database.Ping) error {
 	return nil
 }
 
-// FindAll lookup all entries in ping table
-func (p *PingRepository) FindAll() ([]database.Ping, error) {
-	pings := []database.Ping{}
+// FindAll lookup all entries in ping config table
+func (p *PingRepository) FindAll() ([]database.PingConfig, error) {
+	pings := []database.PingConfig{}
 	if err := p.db.Find(&pings).Error; err != nil {
 		return nil, err
 	}
@@ -35,9 +35,9 @@ func (p *PingRepository) FindAll() ([]database.Ping, error) {
 	return pings, nil
 }
 
-// FindByID looks up a single ping recorded by the id provided
-func (p *PingRepository) FindByID(id int64) (*database.Ping, error) {
-	ping := database.Ping{}
+// FindByID looks up a single ping config recorded by the id provided
+func (p *PingRepository) FindByID(id int64) (*database.PingConfig, error) {
+	ping := database.PingConfig{}
 	if err := p.db.Where("id=?", id).First(&ping).Error; err != nil {
 		return nil, err
 	}
