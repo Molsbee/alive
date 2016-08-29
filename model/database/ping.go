@@ -3,7 +3,7 @@ package database
 // Ping struct represents the data contained within the ping table and its
 // relationships
 type Ping struct {
-	ID                 int
+	ID                 int64
 	Endpoint           string
 	ExpectedStatusCode int
 }

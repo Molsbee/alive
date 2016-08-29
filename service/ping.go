@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -12,29 +10,18 @@ import (
 )
 
 type pingService struct {
-	repository  repository.PingRepository
+	pingRepo    repository.PingRepository
+	respRepo    repository.PingResponseRepository
 	workChannel chan database.Ping
 }
 
-func (ps *pingService) pingWorker(id int) {
-	for p := range ps.workChannel {
-		resp, err := http.Get(p.Endpoint)
-		if err != nil {
-			log.Println(err)
-		}
-
-		if resp.StatusCode != p.ExpectedStatusCode {
-			log.Println("Unexpected status code")
-		}
-
-		log.Println("Success")
-	}
-}
-
-// StartPingService -
+// StartPingService populates the pingService struct with all the required
+// dependencies.  Starts asynchronously polling the ping table and delegates
+// ping work requests to the pingWorkers setup within this start section.
 func StartPingService(db *gorm.DB) {
 	service := pingService{
-		repository:  repository.NewPingRepository(db),
+		pingRepo:    repository.NewPingRepository(db),
+		respRepo:    repository.NewPingResponseRepository(db),
 		workChannel: make(chan database.Ping, 20),
 	}
 
@@ -46,7 +33,7 @@ func StartPingService(db *gorm.DB) {
 
 	go func() {
 		for {
-			pingConfigurations, _ := service.repository.FindAll()
+			pingConfigurations, _ := service.pingRepo.FindAll()
 			for _, pingConf := range pingConfigurations {
 				service.workChannel <- pingConf
 			}
@@ -55,10 +42,22 @@ func StartPingService(db *gorm.DB) {
 	}()
 }
 
-func worker(id int, jobs <-chan int, results chan<- int) {
-	for j := range jobs {
-		fmt.Println("worker", id, "processing job", j)
-		time.Sleep(time.Second)
-		results <- j * 2
+func (ps *pingService) pingWorker(id int) {
+	for p := range ps.workChannel {
+		start, duration, statusCode := ping(p.Endpoint)
+		pingResponse := database.NewPingResponse(start, duration, statusCode, p.ID)
+		ps.respRepo.Save(*pingResponse)
 	}
+}
+
+func ping(endpoint string) (time.Time, int64, int) {
+	start := time.Now()
+	resp, err := http.Get(endpoint)
+	duration := time.Since(start).Nanoseconds() / 1000000
+	if err != nil {
+		return start, -1, 0
+	}
+	defer resp.Body.Close()
+
+	return start, duration, resp.StatusCode
 }

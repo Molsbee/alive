@@ -36,7 +36,7 @@ func (p *PingRepository) FindAll() ([]database.Ping, error) {
 }
 
 // FindByID looks up a single ping recorded by the id provided
-func (p *PingRepository) FindByID(id int) (*database.Ping, error) {
+func (p *PingRepository) FindByID(id int64) (*database.Ping, error) {
 	ping := database.Ping{}
 	if err := p.db.Where("id=?", id).First(&ping).Error; err != nil {
 		return nil, err
