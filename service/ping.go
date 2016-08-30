@@ -33,6 +33,8 @@ func StartPingService(db *gorm.DB) {
 
 	go func() {
 		for {
+			// TODO: Refactor to behave like a cron to avoid on startup executions
+			// and weird time changes during restarts
 			pingConfigurations, _ := service.pingRepo.FindAll()
 			for _, pingConf := range pingConfigurations {
 				service.workChannel <- pingConf
