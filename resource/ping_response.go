@@ -38,7 +38,7 @@ func (pr *PingResponseResource) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("ContentType", "application/json")
 	json.NewEncoder(w).Encode(pingResponses)
 }

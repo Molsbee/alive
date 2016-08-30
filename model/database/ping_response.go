@@ -7,11 +7,11 @@ import "time"
 // and the time the call was executed with the status code received from the
 // endpoint and a reference to the PingConfig.
 type PingResponse struct {
-	ID           int64
-	CreatedTS    time.Time
-	DurationMS   int64
-	StatusCode   int
-	PingConfigID int64
+	ID           int64     `json:"id"`
+	CreatedTS    time.Time `json:"createdTS"`
+	DurationMS   int64     `json:"durationMS"`
+	StatusCode   int       `json:"statusCode"`
+	PingConfigID int64     `json:"pingConfigId"`
 }
 
 // TableName - Gorm convention for determining the table name when executing

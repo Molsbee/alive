@@ -31,6 +31,7 @@ func main() {
 	service.StartPingService(db)
 
 	router := mux.NewRouter()
+	router.StrictSlash(true)
 
 	pingResource := resource.NewPingResource(db)
 	router.HandleFunc("/configuration/ping", pingResource.Get).Methods("GET")
@@ -39,5 +40,7 @@ func main() {
 	pingResponse := resource.NewPingResponseResource(db)
 	router.HandleFunc("/ping/{pingConfigID}", pingResponse.Get).Methods("GET")
 
+	// Setup static file router
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
