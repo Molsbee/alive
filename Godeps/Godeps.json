@@ -27,6 +27,14 @@
 		{
 			"ImportPath": "github.com/jinzhu/inflection",
 			"Rev": "74387dc39a75e970e7a3ae6a3386b5bd2e5c5cff"
+		},
+		{
+			"ImportPath": "github.com/molsbee/alive-common/model/database",
+			"Rev": "755a5109d4cc9d9787a77cc50ada60df665870f9"
+		},
+		{
+			"ImportPath": "github.com/molsbee/alive-common/repository",
+			"Rev": "755a5109d4cc9d9787a77cc50ada60df665870f9"
 		}
 	]
 }

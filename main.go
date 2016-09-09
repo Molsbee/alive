@@ -9,7 +9,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	"github.com/molsbee/alive/resource"
-	"github.com/molsbee/alive/service"
 )
 
 var databaseURL string
@@ -28,17 +27,15 @@ func main() {
 	db.DB().SetMaxOpenConns(20)
 	db.LogMode(true)
 
-	service.StartPingService(db)
-
 	router := mux.NewRouter()
 	router.StrictSlash(true)
 
-	pingResource := resource.NewPingResource(db)
-	router.HandleFunc("/configuration/ping", pingResource.Get).Methods("GET")
-	router.HandleFunc("/configuration/ping", pingResource.Create).Methods("POST")
+	configResource := resource.NewHTTPConfigResource(db)
+	router.HandleFunc("/configuration/http", configResource.Get).Methods("GET")
+	router.HandleFunc("/configuration/http", configResource.Create).Methods("POST")
 
-	pingResponse := resource.NewPingResponseResource(db)
-	router.HandleFunc("/ping/{pingConfigID}", pingResponse.Get).Methods("GET")
+	responseResource := resource.NewHTTPResponseResource(db)
+	router.HandleFunc("/http/{configID}", responseResource.Get).Methods("GET")
 
 	// Setup static file router
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
