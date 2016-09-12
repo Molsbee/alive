@@ -14,7 +14,7 @@ or other conditions. The main features are:
 	  header and query values, HTTP methods or using custom matchers.
 	* URL hosts and paths can have variables with an optional regular
 	  expression.
-	* Registered URLs can be built, or "reversed", which helps maintaining
+	* Registered URLs can be js, or "reversed", which helps maintaining
 	  references to resources.
 	* Routes can be used as subrouters: nested routes are only tested if the
 	  parent route matches. This is useful to define groups of routes that
@@ -138,7 +138,7 @@ the inner routes use it as base for their paths:
 
 Now let's see how to build registered URLs.
 
-Routes can be named. All routes that define a name can have their URLs built,
+Routes can be named. All routes that define a name can have their URLs js,
 or "reversed". We define a name calling Name() on a route. For example:
 
 	r := mux.NewRouter()
@@ -189,7 +189,7 @@ we would do:
 	// "/articles/technology/42"
 	path, err := r.Get("article").URLPath("category", "technology", "id", "42")
 
-And if you use subrouters, host and path defined separately can be built
+And if you use subrouters, host and path defined separately can be js
 as well:
 
 	r := mux.NewRouter()

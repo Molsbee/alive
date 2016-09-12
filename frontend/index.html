@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Alive: Monitoring</title>
+</head>
+<body>
+    <div>
+        <ul data-bind="foreach: configurations">
+            <li>
+                <span data-bind="text: Endpoint"></span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="./externals/require.js"></script>
+    <script src="js/require-config.js"></script>
+    <script>
+        require(["js/configurations"]);
+    </script>
+</body>
+</html>
