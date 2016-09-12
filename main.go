@@ -37,24 +37,23 @@ func main() {
 	responseResource := resource.NewHTTPResponseResource(db)
 	router.HandleFunc("/http/{configID}", responseResource.Get).Methods("GET")
 
-	// BEGIN: Serve JavaScript/CSS Files
+	// START: Serve JavaScript/CSS/Font Files
 	javascript := http.FileServer(http.Dir("./frontend/js"))
 	router.PathPrefix("/js/").Handler(http.StripPrefix("/js/", javascript))
 
 	external := http.FileServer(http.Dir("./frontend/externals"))
 	router.PathPrefix("/externals/").Handler(http.StripPrefix("/externals/", external))
+
+	css := http.FileServer(http.Dir("./frontend/css"))
+	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", css))
+
+	fonts := http.FileServer(http.Dir("./frontend/fonts"))
+	router.PathPrefix("/fonts/").Handler(http.StripPrefix("/fonts/", fonts))
 	// END
 
-	// Template/Views
+	// START: Serve Template/Views
 	router.HandleFunc("/", resource.Main);
+	// END
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
-
-func requestLogger(fn http.Handler) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Request: %s", r.RequestURI)
-		fn.ServeHTTP(w, r)
-	}
-}
-
