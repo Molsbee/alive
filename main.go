@@ -52,7 +52,8 @@ func main() {
 	// END
 
 	// START: Serve Template/Views
-	router.HandleFunc("/", resource.Main);
+	router.HandleFunc("/", resource.Main)
+	router.HandleFunc("/create-monitor", resource.CreateMonitor)
 	// END
 
 	log.Fatal(http.ListenAndServe(":8080", router))
