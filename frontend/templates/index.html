@@ -8,32 +8,23 @@
     <title>Alive: Monitoring</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/site.css">
 </head>
-<body style="padding-top: 50px">
-    {{template "navbar.html"}}
-
-    <div class="container-fluid">
-        <div class="row">
-            {{template "sidebar.html"}}
-            <!--<div class="col-sm-3 col-md-2 sidebar">-->
-                <!--<ul class="nav nav-sidebar">-->
-                    <!--<li class="active"><a href="#">Stuff</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <ul data-bind="foreach: configurations">
-                    <li>
-                        <span data-bind="text: Endpoint"></span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<body>
+    <brand-bar></brand-bar>
+    <side-bar></side-bar>
+    <main class="col-md-offset-2 container-fluid">
+        <ul data-bind="foreach: configurations">
+            <li>
+                <span data-bind="text: Endpoint"></span>
+            </li>
+        </ul>
+    </main>
 
     <script src="../externals/require.js"></script>
     <script src="../js/require-config.js"></script>
     <script>
-        require(["../js/configurations"]);
+        require(["../js/alive-navigation", "../js/configurations"]);
     </script>
 </body>
 </html>

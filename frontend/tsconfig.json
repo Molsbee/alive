@@ -9,6 +9,8 @@
   "files": [
     "./typings/index.d.ts",
     "./src/require-config.ts",
-    "./src/configurations.ts"
+    "./src/configurations.ts",
+    "./src/alive-navigation.ts",
+    "./src/element-builder.ts"
   ]
 }
