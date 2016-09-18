@@ -26,6 +26,11 @@ export class Builder {
         return this;
     }
 
+    appendStyle(name: string, value: string): Builder {
+        this.element.style.setProperty(name, value);
+        return this;
+    }
+
     build(): HTMLElement {
         return this.element;
     }

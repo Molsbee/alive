@@ -3,6 +3,7 @@ side-bar {
     top: 51px;
     bottom: 0;
     width: calc(10%);
+    font-size: 18px;
     overflow: visible;
     z-index: 1;
     background: #282828;
@@ -12,6 +13,10 @@ side-bar {
     -o-transition: width .5s;
     transition: width .5s;
     color: #a3a3a3;
+}
+
+side-bar a {
+    color: white;
 }
 
 main {

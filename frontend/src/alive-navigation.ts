@@ -73,7 +73,16 @@ class Navigation {
                         new element.Builder("li")
                             .addClass("active")
                             .appendChild(
-                                new element.Builder("a").setAttribute("href", "#").textContent("Dashboard").build()
+                                new element.Builder("a")
+                                    .setAttribute("href", "#")
+                                    .appendChild(
+                                        new element.Builder("span")
+                                            .addClass("glyphicon", "glyphicon-home")
+                                            .setAttribute("aria-hidden", "true")
+                                            .build()
+                                    )
+                                    .appendChild(new element.Builder("span").textContent(" Dashboard").build())
+                                    .build()
                             )
                             .build()
                     ).appendChild(
