@@ -17,36 +17,49 @@ class Navigation {
                         new element.Builder("div")
                             .addClass("navbar-header")
                             .appendChild(
-                                new element.Builder("span")
-                                    .addClass("sr-only")
-                                    .textContent("Toggle Navigation")
+                                new element.Builder("button")
+                                    .addClass("navbar-toggle", "collapsed")
+                                    .setAttribute("data-toggle", "collapse")
+                                    .setAttribute("data-target", "#navbar")
+                                    .setAttribute("aria-expanded", "false")
+                                    .setAttribute("aria-controls", "navbar")
                                     .appendChild(
-                                        new element.Builder("button")
-                                            .addClass("navbar-toggle", "collapsed")
-                                            .setAttribute("data-toggle", "collapse")
-                                            .setAttribute("data-target", "#navbar")
-                                            .setAttribute("aria-expanded", "false")
-                                            .setAttribute("aria-controls", "navbar")
-                                            .appendChild(iconBar)
-                                            .appendChild(iconBar)
-                                            .appendChild(iconBar)
+                                        new element.Builder("span")
+                                            .addClass("sr-only")
+                                            .textContent("Toggle navigation")
+                                            .build()
+                                    )
+                                    .appendChild(
+                                        new element.Builder("span")
+                                            .addClass("icon-bar")
+                                            .build()
+                                    )
+                                    .appendChild(
+                                        new element.Builder("span")
+                                            .addClass("icon-bar")
+                                            .build()
+                                    )
+                                    .appendChild(
+                                        new element.Builder("span")
+                                            .addClass("icon-bar")
                                             .build()
                                     )
                                     .build()
                             )
-                            .appendChild(
-                                new element.Builder("a")
-                                    .addClass("navbar-brand")
-                                    .setAttribute("href", "/")
-                                    .textContent("alive").build()
-                            )
                             .build()
                     )
                     .appendChild(
-                        new element.Builder("div")
-                            .addClass("navbar-collapse", "collapse")
+                        new element.Builder("a")
+                            .addClass("navbar-brand")
+                            .setAttribute("href", "/")
+                            .textContent("Alive")
                             .build()
                     )
+                    .build()
+            )
+            .appendChild(
+                new element.Builder("div")
+                    .addClass("navbar-collapse", "collapse")
                     .build()
             )
             .build();
@@ -88,7 +101,6 @@ var brandBar = document.getElementsByTagName("brand-bar")[0];
 brandBar.appendChild(navigation.nav);
 
 var sideBar = document.getElementsByTagName("side-bar")[0];
-sideBar.classList.add("col-md-2", "pull-left");
 sideBar.appendChild(navigation.sideBar);
 
 var main = document.getElementsByTagName("main")[0];
