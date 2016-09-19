@@ -70,39 +70,39 @@ class Navigation {
                 new element.Builder("ul")
                     .addClass("nav")
                     .appendChild(
-                        new element.Builder("li")
-                            .addClass("active")
-                            .appendChild(
-                                new element.Builder("a")
-                                    .setAttribute("href", "#")
-                                    .appendChild(
-                                        new element.Builder("span")
-                                            .addClass("glyphicon", "glyphicon-home")
-                                            .setAttribute("aria-hidden", "true")
-                                            .build()
-                                    )
-                                    .appendChild(new element.Builder("span").textContent(" Dashboard").build())
-                                    .build()
-                            )
-                            .build()
+                        createSideBarItem("glyphicon-home", "dashboard")
                     ).appendChild(
-                        new element.Builder("li")
-                            .appendChild(
-                                new element.Builder("a").setAttribute("href", "#").textContent("Monitoring").build()
-                            )
-                            .build()
+                        createSideBarItem("glyphicon-plus", "create")
                     ).appendChild(
-                        new element.Builder("li")
-                            .appendChild(
-                                new element.Builder("a").setAttribute("href", "#").textContent("Settings").build()
-                            )
-                            .build()
+                        createSideBarItem("glyphicon-list-alt", "monitoring")
+                    ).appendChild(
+                        createSideBarItem("glyphicon-cog", "settings")
                     )
                     .build()
             )
             .build();
     }
 
+}
+
+function createSideBarItem(glyphicon: string, text: string): HTMLElement {
+    return new element.Builder("li")
+                .appendChild(
+                    new element.Builder("a")
+                        .setAttribute("href", "#")
+                        .appendChild(
+                            new element.Builder("span")
+                                .addClass("glyphicon", glyphicon)
+                                .setAttribute("aria-hidden", "true")
+                                .build()
+                        )
+                        .appendChild(
+                            new element.Builder("span")
+                                .textContent(" " + text)
+                                .build()
+                        )
+                        .build()
+                ).build()
 }
 
 var navigation = new Navigation();
